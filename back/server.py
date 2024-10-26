@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
@@ -33,6 +37,10 @@ def receive_file():
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
+            with open(file_path, 'r') as f:
+                obj_data = f.read()
+            socketio.emit('obj_file', {'filename': file.filename, 'content': obj_data})
+
             print(f"File saved successfully at {file_path}")
             return jsonify({
                 "message": "File received successfully",
@@ -46,10 +54,14 @@ def receive_file():
         print(f"Error receiving file: {str(e)}")
         return jsonify({"error": f"Failed to process the file: {str(e)}"}), 500
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected!')
+
 # Handle file too large error
 @app.errorhandler(413)
 def request_entity_too_large(error):
     return jsonify({"error": "File too large"}), 413
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
