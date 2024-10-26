@@ -6,7 +6,10 @@ import { Environment, OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://da3-8bb6f9c7540a.herokuapp.com/");
+// function Model() {
+// Replace this URL with the actual URL where your .obj file is hosted on Heroku
+// const obj = useLoader(OBJLoader, "https://da3-8bb6f9c7540a.herokuapp.com/uploads/da3.obj");
 
 function Model({ objContent }) {
   const [object, setObject] = useState(null);
