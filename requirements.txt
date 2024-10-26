@@ -7,8 +7,5 @@ itsdangerous==2.2.0
 jinja2==3.1.4
 MarkupSafe==3.0.2
 packaging==24.1
-pygame==2.6.1
-PyOpenGL==3.1.7
-PyOpenGL-accelerate==3.1.7
 werkzeug==3.0.6
 zipp==3.20.2
