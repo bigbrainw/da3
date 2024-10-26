@@ -5,7 +5,8 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLoader } from "@react-three/fiber";
 
 function Model() {
-  const obj = useLoader(OBJLoader, process.env.PUBLIC_URL + "/Scanned.obj");
+  // Replace this URL with the actual URL where your .obj file is hosted on Heroku
+  const obj = useLoader(OBJLoader, "https://da3-8bb6f9c7540a.herokuapp.com/uploads/da3.obj");
 
   return (
     <mesh>
@@ -28,11 +29,3 @@ function App() {
 }
 
 export default App;
-
-// import React from "react";
-
-// const ObjectDisplayer = () => {
-//   return <div>ObjectDisplayer</div>;
-// };
-
-// export default ObjectDisplayer;
